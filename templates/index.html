@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+
+
+    <script src='main.js'></script>
+<style>
+    *{
+        padding: 0px;
+        margin: 0px;
+    }
+</style>
+
+</head>
+<body>
+    {% block body %}
+
+    <form action="Storedata" method="POST" > 
+        {% csrf_token %}
+
+        <label>First Name</label>
+        <input type="text" required style="width: 50%; margin-bottom: 10px;" class="form-control" id="fn" name="fn" onkeyup="lettersOnly(this)" placeholder="First name">
+        <label>Middle Name</label>
+        <input type="text" style="width: 50%; margin-bottom: 10px;" class="form-control" name="mn" placeholder="middle name" onkeyup="lettersOnly(this)">
+        <label>Last Name</label>
+        <input type="text" required style="width: 50%; margin-bottom: 10px;" class="form-control" name="ln" placeholder="last name" onkeyup="lettersOnly(this)">
+        <label>Age</label>
+        <input type="number" required style="width: 50%; margin-bottom: 10px;" name="age" placeholder="type here" class="form-control">
+        <label>Gender</label>
+        <div style="margin-bottom: 10px;"><ul style="display: inline;">
+            <li><input type="radio" id="male" value="male"  name="gen"> Male</li>
+            <li><input type="radio"  id="female" value="female" name="gen"> Female</li></ul>
+        </div>
+        <span id="msg1" style="margin-bottom: 10px; color: red;"></span>
+
+        <label>Phone no.</label>
+        <input type="text" id="pn" maxlength="10" required style="width: 50%; margin-bottom: 10px;" name="ph" placeholder="Enter your phone number" class="form-control">
+        <span id="msg" style="margin-bottom: 10px; color: red;"></span>
+        <div style="margin-top: 10px;"><label style="margin-top: 10px;">Qualification</label></div>
+        <input type="text" required style="width: 50%; margin-bottom: 10px;"  name="ql" placeholder="Type here" class="form-control">
+        <label>Reason of Visit</label>
+        <input type="text" required style="width: 50%; margin-bottom: 10px;" name="rov"  placeholder="Type here" class="form-control">
+
+        <input type="submit" onclick="return validate()" class="btn btn-primary" value="SUBMIT">
+        
+
+        
+
+    </form>
+
+    {% endblock  %}
+    <script type="text/javascript">
+        function lettersOnly(input){
+            var regex = /[^a-z]/gi;
+            input.value = input.value.replace(regex,"");
+    
+    
+        }
+
+        function validate(){
+            var pn = document.getElementById('pn').value;
+            if(pn == ''){
+                document.getElementById('pn').style.borderColor = 'red';
+                document.getElementById('msg').innerHTML='** please enter a phone number **';
+                return false;
+            }
+            if(isNaN(pn)){
+                document.getElementById('pn').style.borderColor = 'red';
+                document.getElementById('msg').innerHTML='** please enter a valid phone number **';
+                return false;
+
+            }
+            if(pn.length<10){
+                document.getElementById('pn').style.borderColor = 'red';
+                document.getElementById('msg').innerHTML='** phone number must be of 10 digits **';
+                return false;
+            }
+            if((pn.charAt(0)!=9) && (pn.charAt(0)!=8) && (pn.charAt(0)!=7) && (pn.charAt(0)!=6)){
+                document.getElementById('pn').style.borderColor = 'red';
+                document.getElementById('msg').innerHTML='** please enter a valid phone number that start with 9,8,7, or 6 **';
+                return false;
+
+            var g1 = document.getElementById('male')
+            var g2 = document.getElementById('female')
+            if(g1.value == null && g2.value == null){
+
+
+                document.getElementById('msg1').innerHTML='** please select a gender **';
+                return false;
+            }
+            }
+        }
+    </script>
+    
+</body>
+</html>
